@@ -89,7 +89,9 @@ def model_train(ds):
             print('Save new model on epoch: %d' % (epoch + 1))
             best_loss = val_loss
             result['best_loss'] = val_loss
-            torch.save(model.state_dict(), config['save_path'])
+            if not os.path.exists(config['model_path']):
+                os.mkdir(config['model_path'])
+            torch.save(model.state_dict(), config['model_path'] + 'ncf.pth')
             num_patience = 0
         else:
             num_patience += 1

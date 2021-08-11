@@ -15,6 +15,6 @@ config = {
   "batch_size": 8,
   "num_epochs": 3,
   "total_patience": 30,
-  "data_path": "../data",
-  "save_path": "../model/ncf.pth"
+  "data_path": "../data/",
+  "model_path": "../model/"
 }

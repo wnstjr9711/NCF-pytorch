@@ -6,11 +6,11 @@ def get_prediction(user_id_list, movie_id_list):
     dataset = DatasetLoader()
     movies_df = get_movies_df()
     moviename_dict = movies_df.to_dict()['title']
-    if not os.path.exists(config['save_path']):
+    if not os.path.exists(config['model_path'] + 'ncf.pth'):
         model_train(dataset)
     my_model = NCF(dataset.num_users, dataset.num_movies, config['hidden_layers'], config['dropouts'],
                    config['num_factors'], config['embedding_dropout'])
-    my_model.load_state_dict(torch.load(config['save_path']))
+    my_model.load_state_dict(torch.load(config['model_path'] + 'ncf.pth'))
 
     processed_test_input_df = pd.DataFrame({
         'user_id': [dataset.user_to_index[x] for x in user_id_list],
