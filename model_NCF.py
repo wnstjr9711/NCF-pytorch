@@ -24,13 +24,11 @@ class NCF(nn.Module):
             yield nn.Dropout(dropouts[idx])
             idx += 1
 
-    def forward(self, users, movies, min_rating=0.5, max_rating=5):
+    def forward(self, users, movies, min_rating=0, max_rating=1):
         concat_features = torch.cat([self.user_emb(users), self.movie_emb(movies)], dim=1)
         x = f.relu(self.hidden_layers(concat_features))
         # 0과 1사이의 숫자로 나타낸다
         out = torch.sigmoid(self.fc(x))
-        # rating 으로 변환한다
-        out = (out * (max_rating - min_rating)) + min_rating
         return out
 
     def predict(self, users, movies):

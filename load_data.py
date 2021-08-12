@@ -6,8 +6,8 @@ class DatasetLoader:
     def __init__(self):
         self.train_df, val_temp_df = self.read_data(config['data_path'])
 
-        self.min_rating = min(self.train_df.rate)
-        self.max_rating = self.train_df.rate.max()
+        self.min_rating = 0
+        self.max_rating = 1
 
         self.unique_users = self.train_df.user.unique()
         self.num_users = len(self.unique_users)
@@ -17,8 +17,9 @@ class DatasetLoader:
         self.unique_movies = self.train_df.movie.unique()
         self.num_movies = len(self.unique_movies)
         self.movie_to_index = {original: idx for idx, original in enumerate(self.unique_movies)}
-
         self.val_df = val_temp_df[val_temp_df.user.isin(self.unique_users) & val_temp_df.movie.isin(self.unique_movies)]
+        self.train_df.rate = 1
+        self.val_df.rate = 1
 
     @staticmethod
     def read_data(data_path):
@@ -31,7 +32,6 @@ class DatasetLoader:
         x_train = pd.DataFrame({'user': self.train_df.user.map(self.user_to_index),
                                 'movie': self.train_df.movie.map(self.movie_to_index)})
         y_train = self.train_df['rate'].astype(np.float32)
-
         return x_train, y_train
 
     def generate_valset(self):
