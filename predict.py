@@ -10,7 +10,7 @@ def get_prediction(user_id_list, movie_id_list):
         model_train(dataset)
     my_model = NCF(dataset.num_users, dataset.num_movies, config['hidden_layers'], config['dropouts'],
                    config['num_factors'], config['embedding_dropout'])
-    my_model.load_state_dict(torch.load(config['model_path'] + 'ncf.pth'))
+    my_model.load_state_dict(torch.load(os.path.join(config['model_path'], 'ncf.pth')))
 
     processed_test_input_df = pd.DataFrame({
         'user_id': [dataset.user_to_index[x] for x in user_id_list],

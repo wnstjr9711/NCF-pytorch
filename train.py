@@ -91,7 +91,7 @@ def model_train(ds):
             result['best_loss'] = val_loss
             if not os.path.exists(config['model_path']):
                 os.mkdir(config['model_path'])
-            torch.save(model.state_dict(), config['model_path'] + 'ncf.pth')
+            torch.save(model.state_dict(), os.path.join(config['model_path'], 'ncf.pth'))
             num_patience = 0
         else:
             num_patience += 1
