@@ -45,10 +45,10 @@ def model_train(ds):
 
     x_train, y_train = ds.generate_trainset()
     x_valid, y_valid = ds.generate_valset()
-    print(f'TrainSet Info: {ds.num_users} users, {ds.num_movies} movies')
+    print(f'TrainSet Info: {ds.num_users} users, {ds.num_apt} apt')
 
     model = NCF(
-        n_users=ds.num_users, n_movies=ds.num_movies,
+        n_users=ds.num_users, n_apt=ds.num_apt,
         n_factors=config['num_factors'], hidden=config['hidden_layers'],
         embedding_dropout=config['embedding_dropout'], dropouts=config['dropouts']
     )
@@ -81,7 +81,7 @@ def model_train(ds):
 
         # Apply Early Stopping criteria and save best model params
         val_outputs = model(torch.LongTensor(x_valid.user.values).to(device),
-                            torch.LongTensor(x_valid.movie.values).to(device), ds.min_rating, ds.max_rating)
+                            torch.LongTensor(x_valid.apt.values).to(device), ds.min_rating, ds.max_rating)
         val_loss = criterion(val_outputs.to(device), torch.FloatTensor(y_valid.values).view(-1, 1).to(device))
         result['val'] = float((val_loss / len(x_valid)).data)
 

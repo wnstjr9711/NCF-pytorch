@@ -1,7 +1,7 @@
 from predict import *
 
-movie_id_list = [10253, 10102, 10007]
-user_id = 11242
+movie_id_list = [10003, 10253, 10102, 10007, 10302]
+user_id = 10
 user_id_list = [user_id] * len(movie_id_list)
 
 
