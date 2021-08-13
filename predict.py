@@ -4,8 +4,8 @@ from train import *
 
 def get_prediction(user_id_list, apt_id_list):
     dataset = DatasetLoader()
-    movies_df = get_movies_df()
-    moviename_dict = movies_df.to_dict()['title']
+    apt_df = get_apt_df()
+    dict_apt_name = apt_df.to_dict()['title']
     if not os.path.exists(config['model_path'] + 'ncf.pth'):
         model_train(dataset)
     my_model = NCF(dataset.num_users, dataset.num_apt, config['hidden_layers'], config['dropouts'],
@@ -23,7 +23,7 @@ def get_prediction(user_id_list, apt_id_list):
     result_df = pd.DataFrame({
         'userId': user_id_list,
         'aptId': apt_id_list,
-        'aptName': [moviename_dict[x] for x in apt_id_list],
+        'aptName': [dict_apt_name[x] for x in apt_id_list],
         'pred_ratings': pred_results
     })
 

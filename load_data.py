@@ -43,8 +43,8 @@ class DatasetLoader:
         return x_val, y_val
 
 
-def get_movies_df():
+def get_apt_df():
     # Load all related dataframe
-    movies_df = pd.read_csv(os.path.join(config['data_path'], 'movies.txt'), sep='\t', encoding='utf-8')
-    movies_df = movies_df.set_index('movie')
-    return movies_df
+    apt_df = pd.read_csv(os.path.join(config['data_path'], 'movies.txt'), sep='\t', encoding='utf-8')
+    apt_df = apt_df.set_index('movie')
+    return apt_df
