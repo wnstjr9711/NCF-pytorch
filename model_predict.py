@@ -5,7 +5,7 @@ from model_train import *
 def get_prediction(user_id_list, apt_id_list):
     dataset = DatasetLoader()
     apt_df = get_apt_df()
-    dict_apt_name = apt_df.to_dict()['title']
+    # dict_apt_name = apt_df.to_dict()['title']
     if not os.path.exists(config['model_path'] + 'ncf.pth'):
         model_train(dataset)
     my_model = NCF(dataset.num_users, dataset.num_apt, config['hidden_layers'], config['dropouts'],

@@ -1,7 +1,7 @@
-from predict import *
+from model_predict import *
 
-movie_id_list = [10003, 10253, 10102, 10007, 10302]
-user_id = 10
+movie_id_list = [i for i in range(10001, 10040) if i != 10010 and i != 10031 and i != 10032]
+user_id = 1000
 user_id_list = [user_id] * len(movie_id_list)
 
 

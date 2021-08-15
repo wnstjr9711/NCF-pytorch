@@ -1,6 +1,9 @@
 from sklearn.model_selection import train_test_split
 from config import *
 
+import warnings
+warnings.filterwarnings("ignore")
+
 
 class DatasetLoader:
     def __init__(self):
@@ -18,6 +21,7 @@ class DatasetLoader:
         self.unique_apt = self.train_df.apt.unique()
         self.num_apt = len(self.unique_apt)
         self.apt_to_index = {original: idx for idx, original in enumerate(self.unique_apt)}
+
         self.val_df = val_temp_df[val_temp_df.user.isin(self.unique_users) & val_temp_df.apt.isin(self.unique_apt)]
 
         self.train_df.rate = 1
