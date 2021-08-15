@@ -1,5 +1,5 @@
 from load_data import *
-from train import *
+from model_train import *
 
 
 def get_prediction(user_id_list, apt_id_list):
@@ -23,7 +23,7 @@ def get_prediction(user_id_list, apt_id_list):
     result_df = pd.DataFrame({
         'userId': user_id_list,
         'aptId': apt_id_list,
-        'aptName': [dict_apt_name[x] for x in apt_id_list],
+        # 'aptName': [dict_apt_name[x] for x in apt_id_list],
         'pred_ratings': pred_results
     })
 
