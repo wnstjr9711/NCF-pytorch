@@ -1,8 +1,6 @@
 from sklearn.model_selection import train_test_split
 from config import *
-
-import warnings
-warnings.filterwarnings("ignore")
+import db_connect
 
 
 class DatasetLoader:
@@ -24,7 +22,8 @@ class DatasetLoader:
 
     @staticmethod
     def read_data():
-        df = pd.read_csv(os.path.join(config['data_path'], 'rates.csv'), usecols=['user', 'apt'])
+        # df = pd.read_csv(os.path.join(config['data_path'], 'aptlog.csv'), usecols=['user', 'apt'])
+        df = pd.DataFrame(db_connect.get_log())
         train_df, val_df = train_test_split(df, test_size=0.2, random_state=1234, shuffle=True)
         train_df['searched'] = [1 for i in range(len(train_df))]
         val_df['searched'] = [1 for i in range(len(val_df))]
@@ -43,9 +42,3 @@ class DatasetLoader:
         y_val = self.val_df['searched'].astype(np.float32)
         return x_val, y_val
 
-
-def get_apt_df():
-    # Load all related dataframe
-    apt_df = pd.read_csv(os.path.join(config['data_path'], 'movies.txt'), sep='\t', encoding='utf-8')
-    apt_df = apt_df.set_index('movie')
-    return apt_df

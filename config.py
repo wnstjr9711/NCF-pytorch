@@ -13,8 +13,17 @@ config = {
   "learning_rate": 1e-3,
   "weight_decay": 1e-5,
   "batch_size": 8,
-  "num_epochs": 3,
+  "num_epochs": 100,
   "total_patience": 30,
   "data_path": "../data/",
   "model_path": "../model/"
+}
+
+data_config = {
+  "host": "8.tcp.ngrok.io",
+  "port": 15865,
+  "user": "root",
+  "passwd": "",
+  "db": "recommend",
+  "charset": 'utf8'
 }
