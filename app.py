@@ -10,7 +10,7 @@ def hello_world():
     return 'neural collaborative filtering'
 
 
-@app.route('/recommend/<uid>')
+@app.route('/recommend/<uid>', methods=['GET'])
 def get_recommendation(uid):
     uid = eval(uid)
     result = json.dumps({'prediction': list(get_prediction(uid)['aptId'])})

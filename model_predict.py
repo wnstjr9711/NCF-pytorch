@@ -6,8 +6,7 @@ def get_prediction(uid):
     dataset = DatasetLoader()
     apt_id_list = dataset.unique_apt
     user_id_list = [uid] * len(apt_id_list)
-    if not os.path.exists(config['model_path'] + 'ncf.pth'):
-        model_train(dataset)
+    model_train(dataset)
     my_model = NCF(dataset.num_users, dataset.num_apt, config['hidden_layers'], config['dropouts'],
                    config['num_factors'], config['embedding_dropout'])
     my_model.load_state_dict(torch.load(os.path.join(config['model_path'], 'ncf.pth')))

@@ -65,6 +65,11 @@ def model_train(ds):
     optimizer = optim.Adam(model.parameters(), lr=config['learning_rate'], weight_decay=config['weight_decay'])
 
     result = dict()
+
+    if not os.path.exists(config['model_path']):
+        os.mkdir(config['model_path'])
+    torch.save(model.state_dict(), os.path.join(config['model_path'], 'ncf.pth'))
+
     for epoch in tqdm(range(num_epochs)):
         training_loss = 0.0
         for batch in batches(x_train, y_train, shuffle=True, bs=batch_size):
@@ -89,8 +94,7 @@ def model_train(ds):
             print('Save new model on epoch: %d' % (epoch + 1))
             best_loss = val_loss
             result['best_loss'] = val_loss
-            if not os.path.exists(config['model_path']):
-                os.mkdir(config['model_path'])
+
             torch.save(model.state_dict(), os.path.join(config['model_path'], 'ncf.pth'))
             num_patience = 0
         else:
