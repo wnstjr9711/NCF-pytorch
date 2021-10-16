@@ -1,7 +1,7 @@
 import math
 from model_NCF import *
 from tqdm import tqdm
-
+from config import request
 
 class BatchIterator:
     def __init__(self, x, y, batch_size=32, shuffle=True):
@@ -40,7 +40,7 @@ def batches(x, y, bs=32, shuffle=True):
         yield x_batch, y_batch.view(-1, 1)
 
 
-def model_train(ds):
+def model_train(ds, uid, request_id):
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
     x_train, y_train = ds.generate_trainset()
@@ -69,8 +69,10 @@ def model_train(ds):
     if not os.path.exists(config['model_path']):
         os.mkdir(config['model_path'])
     torch.save(model.state_dict(), os.path.join(config['model_path'], 'ncf.pth'))
-
     for epoch in tqdm(range(num_epochs)):
+        print(request, request_id)
+        if uid in request and request[uid] != request_id:
+            break
         training_loss = 0.0
         for batch in batches(x_train, y_train, shuffle=True, bs=batch_size):
             x_batch, y_batch = [b.to(device) for b in batch]

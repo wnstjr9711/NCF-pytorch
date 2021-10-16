@@ -22,11 +22,8 @@ class DatasetLoader:
 
     @staticmethod
     def read_data():
-        # df = pd.read_csv(os.path.join(config['data_path'], 'aptlog.csv'), usecols=['user', 'apt'])
         df = pd.DataFrame(db_connect.get_log())
         train_df, val_df = train_test_split(df, test_size=0.2, random_state=1234, shuffle=True)
-        train_df['searched'] = [1 for i in range(len(train_df))]
-        val_df['searched'] = [1 for i in range(len(val_df))]
         return train_df, val_df
 
     def generate_trainset(self):

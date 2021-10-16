@@ -13,7 +13,7 @@ def hello_world():
 @app.route('/recommend/<uid>', methods=['GET'])
 def get_recommendation(uid):
     uid = eval(uid)
-    result = json.dumps({'prediction': list(get_prediction(uid)['aptId'])})
+    result = json.dumps({'prediction': get_prediction(uid)})
     return result
 
 
